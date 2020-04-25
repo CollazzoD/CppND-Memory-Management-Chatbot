@@ -45,6 +45,39 @@ ChatBot::~ChatBot()
 //// STUDENT CODE
 ////
 
+// Move constructor
+ChatBot::ChatBot(ChatBot &&source){
+    std::cout << "ChatBot Move Constructor" << std::endl;
+    this->_chatLogic = source._chatLogic;
+    source._chatLogic = nullptr;
+    this->_rootNode = source._rootNode;
+    source._rootNode = nullptr;
+    this->_currentNode = source._currentNode;
+    source._currentNode = nullptr;
+    this->_image = source._image;
+    source._image = NULL;   // wxWidget uses NULL instead of nullptr
+}
+
+ChatBot& ChatBot::operator=(ChatBot &&source) {
+    std::cout << "ChatBot Move Assignment" << std::endl;
+    if (this == &source)
+        return *this;
+    
+    if(_image != NULL) {
+        delete _image;
+        _image = NULL;
+    }
+
+    this->_chatLogic = source._chatLogic;
+    source._chatLogic = nullptr;
+    this->_rootNode = source._rootNode;
+    source._rootNode = nullptr;
+    this->_currentNode = source._currentNode;
+    source._currentNode = nullptr;
+    this->_image = source._image;
+    source._image = NULL;   // wxWidget uses NULL instead of nullptr
+    return *this;
+}
 ////
 //// EOF STUDENT CODE
 
