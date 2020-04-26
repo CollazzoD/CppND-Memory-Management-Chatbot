@@ -49,33 +49,35 @@ ChatBot::~ChatBot()
 ChatBot::ChatBot(ChatBot &&source){
     std::cout << "ChatBot Move Constructor" << std::endl;
     this->_chatLogic = source._chatLogic;
+    this->_chatLogic->SetChatbotHandle(this);
     source._chatLogic = nullptr;
     this->_rootNode = source._rootNode;
     source._rootNode = nullptr;
     this->_currentNode = source._currentNode;
     source._currentNode = nullptr;
     this->_image = source._image;
-    source._image = NULL;   // wxWidget uses NULL instead of nullptr
+    source._image = nullptr;
 }
 
 ChatBot& ChatBot::operator=(ChatBot &&source) {
-    std::cout << "ChatBot Move Assignment" << std::endl;
+    std::cout << "ChatBot Move Assignment Operator" << std::endl;
     if (this == &source)
         return *this;
     
-    if(_image != NULL) {
-        delete _image;
-        _image = NULL;
+    if ((this->_image != NULL) && (this->_image != nullptr)) {
+        delete this->_image;
+        this->_image = NULL;
     }
 
     this->_chatLogic = source._chatLogic;
+    this->_chatLogic->SetChatbotHandle(this);
     source._chatLogic = nullptr;
     this->_rootNode = source._rootNode;
     source._rootNode = nullptr;
     this->_currentNode = source._currentNode;
     source._currentNode = nullptr;
     this->_image = source._image;
-    source._image = NULL;   // wxWidget uses NULL instead of nullptr
+    source._image = nullptr;
     return *this;
 }
 ////
@@ -125,7 +127,7 @@ void ChatBot::SetCurrentNode(GraphNode *node)
     std::mt19937 generator(int(std::time(0)));
     std::uniform_int_distribution<int> dis(0, answers.size() - 1);
     std::string answer = answers.at(dis(generator));
-
+    
     // send selected node answer to user
     _chatLogic->SendMessageToUser(answer);
 }
