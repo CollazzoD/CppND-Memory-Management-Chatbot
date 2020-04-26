@@ -45,7 +45,8 @@ ChatBot::~ChatBot()
 //// STUDENT CODE
 ////
 
-// Move constructor
+
+
 ChatBot::ChatBot(ChatBot &&source){
     std::cout << "ChatBot Move Constructor" << std::endl;
     this->_chatLogic = source._chatLogic;
